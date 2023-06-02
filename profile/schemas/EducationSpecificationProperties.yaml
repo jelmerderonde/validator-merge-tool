@@ -1,0 +1,25 @@
+required:
+  - primaryCode
+  - educationSpecificationType
+  - name
+  - validFrom
+properties:
+  consumers:
+    type: array
+    items:
+      anyOf:
+        - type: object
+          properties:
+            consumerKey:
+              type: string
+              value: rio
+            formalDocument:
+              type: string
+              enum:
+                - diploma
+                - certificate
+                - no official document
+                - school advice
+                - testimonial
+        - $ref: './Consumer.yaml'
+    minItems: 1
