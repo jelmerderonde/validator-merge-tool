@@ -5,21 +5,8 @@ required:
   - validFrom
 properties:
   consumers:
-    type: array
-    items:
-      anyOf:
-        - type: object
-          properties:
-            consumerKey:
-              type: string
-              value: rio
-            formalDocument:
-              type: string
-              enum:
-                - diploma
-                - certificate
-                - no official document
-                - school advice
-                - testimonial
-        - $ref: './Consumer.yaml'
-    minItems: 1
+    # in addition to general Consumer `items` (in base), there should
+    # be at least one RioConsumer
+    contains:
+      $ref: './RioConsumer.yaml'
+      
