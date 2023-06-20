@@ -1,15 +1,7 @@
-required:
-  - primaryCode
-  - educationSpecificationType
-  - name
-  - validFrom
-  - formalDocument
-  - level
-  - sector
-properties:
-  consumers:
-    # in addition to general Consumer `items` (in base), there should
-    # be at least one RioConsumer
-    contains:
-      $ref: './EducationSpecificationRioConsumer.yaml'
-      
+oneOf:
+  - $ref: './HoOpleidingProperties.yaml'
+  - $ref: './HOECProperties.yaml'
+type: null
+description: null
+required: null
+properties: null

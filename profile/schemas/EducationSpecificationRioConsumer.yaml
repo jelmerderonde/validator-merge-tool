@@ -3,14 +3,6 @@ allOf:
   - properties:
       consumerKey:
         const: rio
-      formalDocument:
-        type: string
-        enum:
-          - diploma
-          - certificate
-          - no official document
-          - school advice
-          - testimonial
       educationSpecificationSubType:
         type: string
         enum:
