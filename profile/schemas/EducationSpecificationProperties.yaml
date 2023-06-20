@@ -3,10 +3,13 @@ required:
   - educationSpecificationType
   - name
   - validFrom
+  - formalDocument
+  - level
+  - sector
 properties:
   consumers:
     # in addition to general Consumer `items` (in base), there should
     # be at least one RioConsumer
     contains:
-      $ref: './RioConsumer.yaml'
+      $ref: './EducationSpecificationRioConsumer.yaml'
       
