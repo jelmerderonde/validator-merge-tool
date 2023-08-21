@@ -5,4 +5,4 @@ required:
   - validFrom
 properties:
   educationSpecificationType:
-    const: cluster
+    const: course

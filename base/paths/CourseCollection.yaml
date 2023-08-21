@@ -55,7 +55,7 @@ get:
                   items:
                     type: array
                     items:
-                      $ref: '../schemas/Course.yaml'
+                      $ref: '../schemas/CourseExpanded.yaml'
                   ext:
                     $ref: '../schemas/Ext.yaml'
     '400':

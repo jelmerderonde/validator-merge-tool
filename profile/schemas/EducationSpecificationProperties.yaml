@@ -1,7 +1,0 @@
-oneOf:
-  - $ref: './HoOpleidingProperties.yaml'
-  - $ref: './HOECProperties.yaml'
-type: null
-description: null
-required: null
-properties: null

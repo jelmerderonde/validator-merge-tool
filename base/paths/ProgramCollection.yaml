@@ -73,7 +73,7 @@ get:
                   items:
                     type: array
                     items:
-                      $ref: '../schemas/Program.yaml'
+                      $ref: '../schemas/ProgramExpanded.yaml'
                   ext:
                     $ref: '../schemas/Ext.yaml'
     '400':
