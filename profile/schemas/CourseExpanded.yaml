@@ -1,10 +1,10 @@
 required:
-  - programId
-  - programType
+  - courseId
   - name
   - abbreviation
   - description
   - primaryCode
+  - level
   - teachingLanguage
   - validFrom
   - educationSpecification

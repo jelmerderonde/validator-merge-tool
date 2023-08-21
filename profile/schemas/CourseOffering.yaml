@@ -1,6 +1,6 @@
 allOf:
   - $ref: './Offering.yaml'
-  - $ref: './ProgramOfferingProperties.yaml'
+  - $ref: './CourseOfferingProperties.yaml'
   - required:
     - offeringId
     - primaryCode
@@ -12,7 +12,3 @@ allOf:
     - startDate
     - endDate
     - enrollStartDate
-properties:
-  consumers:
-    contains:
-      $ref: './OfferingRioConsumer.yaml'

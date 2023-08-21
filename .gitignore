@@ -1,2 +1,3 @@
 base-with-profile/
-.clj-kondo
+.clj-kondo/
+.lsp/
