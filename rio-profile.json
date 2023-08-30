@@ -622,7 +622,28 @@
               }
             }
           }
-        ]
+        ],
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/HoOpleidingProperties"
+          },
+          {
+            "$ref": "#/components/schemas/HOECProperties"
+          },
+          {
+            "$ref": "#/components/schemas/HoOnderwijsEenheidProperties"
+          },
+          {
+            "$ref": "#/components/schemas/HoParticuliereOpleidingProperties"
+          }
+        ],
+        "properties": {
+          "consumers": {
+            "contains": {
+              "$ref": "#/components/schemas/EducationSpecificationRioConsumer"
+            }
+          }
+        }
       },
       "organizationType": {
         "type": "string",
@@ -1044,6 +1065,109 @@
           }
         }
       },
+      "HoOpleidingProperties": {
+        "required": [
+          "primaryCode",
+          "educationSpecificationType",
+          "name",
+          "validFrom",
+          "formalDocument",
+          "level",
+          "sector"
+        ],
+        "properties": {
+          "educationSpecificationType": {
+            "const": "program"
+          }
+        }
+      },
+      "HOECProperties": {
+        "required": [
+          "primaryCode",
+          "educationSpecificationType",
+          "name",
+          "validFrom"
+        ],
+        "properties": {
+          "educationSpecificationType": {
+            "const": "cluster"
+          }
+        }
+      },
+      "HoOnderwijsEenheidProperties": {
+        "required": [
+          "primaryCode",
+          "educationSpecificationType",
+          "name",
+          "validFrom"
+        ],
+        "properties": {
+          "educationSpecificationType": {
+            "const": "course"
+          }
+        }
+      },
+      "HoParticuliereOpleidingProperties": {
+        "required": [
+          "primaryCode",
+          "educationSpecificationType",
+          "name",
+          "validFrom"
+        ],
+        "properties": {
+          "educationSpecificationType": {
+            "const": "privateProgram"
+          }
+        }
+      },
+      "EducationSpecificationRioConsumer": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Consumer"
+          },
+          {
+            "properties": {
+              "consumerKey": {
+                "const": "rio"
+              },
+              "educationSpecificationSubType": {
+                "type": "string",
+                "enum": [
+                  "variant",
+                  "cluster"
+                ]
+              },
+              "category": {
+                "type": "array",
+                "description": "A classification for programs in non-formal education. Used when describing EducationSpecification's that will map to a `articuliereOpleiding in RIO\n",
+                "minItems": 0,
+                "maxItems": 3,
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "business_and_project_support",
+                    "economy",
+                    "behavior_and_society",
+                    "healthcare_and_sport",
+                    "hobby_and_leisure_time",
+                    "agriculture_food_and_natural_environment",
+                    "management_and_project_management",
+                    "nature",
+                    "education",
+                    "law",
+                    "cross_sectoral",
+                    "language_and_culture",
+                    "technology_and_ict",
+                    "tourism_hospitality_and_recreation",
+                    "transport_and_logistics",
+                    "security_and_defense"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
       "Program": {
         "allOf": [
           {
@@ -1066,7 +1190,26 @@
               }
             }
           }
-        ]
+        ],
+        "required": [
+          "programId",
+          "programType",
+          "name",
+          "abbreviation",
+          "description",
+          "primaryCode",
+          "teachingLanguage",
+          "validFrom",
+          "educationSpecification",
+          "duration"
+        ],
+        "properties": {
+          "consumers": {
+            "contains": {
+              "$ref": "#/components/schemas/ProgramRioConsumer"
+            }
+          }
+        }
       },
       "PersonId": {
         "type": "object",
@@ -1636,31 +1779,6 @@
           }
         }
       },
-      "TimelineOverrideProgram": {
-        "type": "object",
-        "description": "A time-line override of the program.",
-        "required": [
-          "validFrom",
-          "program"
-        ],
-        "properties": {
-          "validFrom": {
-            "type": "string",
-            "description": "The day on which this timelineOverride starts (inclusive), RFC3339 (date)",
-            "format": "date",
-            "example": "2021-09-01"
-          },
-          "validTo": {
-            "type": "string",
-            "description": "The day on which this timelineOverride ends (exclusive), RFC3339 (date)",
-            "format": "date",
-            "example": "2022-08-31"
-          },
-          "program": {
-            "$ref": "#/components/schemas/ProgramProperties"
-          }
-        }
-      },
       "ProgramRioConsumer": {
         "allOf": [
           {
@@ -1756,6 +1874,31 @@
           }
         ]
       },
+      "TimelineOverrideProgram": {
+        "type": "object",
+        "description": "A time-line override of the program.",
+        "required": [
+          "validFrom",
+          "program"
+        ],
+        "properties": {
+          "validFrom": {
+            "type": "string",
+            "description": "The day on which this timelineOverride starts (inclusive), RFC3339 (date)",
+            "format": "date",
+            "example": "2021-09-01"
+          },
+          "validTo": {
+            "type": "string",
+            "description": "The day on which this timelineOverride ends (exclusive), RFC3339 (date)",
+            "format": "date",
+            "example": "2022-08-31"
+          },
+          "program": {
+            "$ref": "#/components/schemas/ProgramProperties"
+          }
+        }
+      },
       "ProgramExpanded": {
         "allOf": [
           {
@@ -1774,26 +1917,7 @@
               }
             }
           }
-        ],
-        "required": [
-          "programId",
-          "programType",
-          "name",
-          "abbreviation",
-          "description",
-          "primaryCode",
-          "teachingLanguage",
-          "validFrom",
-          "educationSpecification",
-          "duration"
-        ],
-        "properties": {
-          "consumers": {
-            "contains": {
-              "$ref": "#/components/schemas/ProgramRioConsumer"
-            }
-          }
-        }
+        ]
       },
       "OfferingId": {
         "type": "object",
@@ -2640,55 +2764,6 @@
           }
         }
       },
-      "Course": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/CourseId"
-          },
-          {
-            "$ref": "#/components/schemas/CourseProperties"
-          },
-          {
-            "properties": {
-              "validFrom": {
-                "description": "The first day this course is valid (inclusive).",
-                "type": "string",
-                "format": "date"
-              },
-              "validTo": {
-                "description": "The day this course ceases to be valid (e.g. exclusive).",
-                "type": "string",
-                "format": "date"
-              }
-            }
-          }
-        ]
-      },
-      "TimelineOverrideCourse": {
-        "type": "object",
-        "required": [
-          "validFrom",
-          "course"
-        ],
-        "description": "A timeline override of the course.",
-        "properties": {
-          "validFrom": {
-            "type": "string",
-            "description": "The day on which this timelineOverride starts (inclusive), RFC3339 (date)",
-            "format": "date",
-            "example": "2021-09-01"
-          },
-          "validTo": {
-            "type": "string",
-            "description": "The day on which this timelineOverride ends (exclusive), RFC3339 (date)",
-            "format": "date",
-            "example": "2022-08-31"
-          },
-          "course": {
-            "$ref": "#/components/schemas/CourseProperties"
-          }
-        }
-      },
       "CourseRioConsumer": {
         "allOf": [
           {
@@ -2784,21 +2859,25 @@
           }
         ]
       },
-      "CourseExpanded": {
+      "Course": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/Course"
+            "$ref": "#/components/schemas/CourseId"
           },
           {
-            "type": "object",
-            "description": "These properties are only present when explicitly included",
+            "$ref": "#/components/schemas/CourseProperties"
+          },
+          {
             "properties": {
-              "timelineOverrides": {
-                "description": "Timeline overrides allow an implementation to provide versions of entities that will be valid in the future or have been in the past.",
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/TimelineOverrideCourse"
-                }
+              "validFrom": {
+                "description": "The first day this course is valid (inclusive).",
+                "type": "string",
+                "format": "date"
+              },
+              "validTo": {
+                "description": "The day this course ceases to be valid (e.g. exclusive).",
+                "type": "string",
+                "format": "date"
               }
             }
           }
@@ -2822,6 +2901,51 @@
             }
           }
         }
+      },
+      "TimelineOverrideCourse": {
+        "type": "object",
+        "required": [
+          "validFrom",
+          "course"
+        ],
+        "description": "A timeline override of the course.",
+        "properties": {
+          "validFrom": {
+            "type": "string",
+            "description": "The day on which this timelineOverride starts (inclusive), RFC3339 (date)",
+            "format": "date",
+            "example": "2021-09-01"
+          },
+          "validTo": {
+            "type": "string",
+            "description": "The day on which this timelineOverride ends (exclusive), RFC3339 (date)",
+            "format": "date",
+            "example": "2022-08-31"
+          },
+          "course": {
+            "$ref": "#/components/schemas/CourseProperties"
+          }
+        }
+      },
+      "CourseExpanded": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Course"
+          },
+          {
+            "type": "object",
+            "description": "These properties are only present when explicitly included",
+            "properties": {
+              "timelineOverrides": {
+                "description": "Timeline overrides allow an implementation to provide versions of entities that will be valid in the future or have been in the past.",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TimelineOverrideCourse"
+                }
+              }
+            }
+          }
+        ]
       },
       "CourseOfferingProperties": {
         "type": "object",
@@ -2981,109 +3105,6 @@
           }
         }
       },
-      "HoOpleidingProperties": {
-        "required": [
-          "primaryCode",
-          "educationSpecificationType",
-          "name",
-          "validFrom",
-          "formalDocument",
-          "level",
-          "sector"
-        ],
-        "properties": {
-          "educationSpecificationType": {
-            "const": "program"
-          }
-        }
-      },
-      "HOECProperties": {
-        "required": [
-          "primaryCode",
-          "educationSpecificationType",
-          "name",
-          "validFrom"
-        ],
-        "properties": {
-          "educationSpecificationType": {
-            "const": "cluster"
-          }
-        }
-      },
-      "HoOnderwijsEenheidProperties": {
-        "required": [
-          "primaryCode",
-          "educationSpecificationType",
-          "name",
-          "validFrom"
-        ],
-        "properties": {
-          "educationSpecificationType": {
-            "const": "course"
-          }
-        }
-      },
-      "HoParticuliereOpleidingProperties": {
-        "required": [
-          "primaryCode",
-          "educationSpecificationType",
-          "name",
-          "validFrom"
-        ],
-        "properties": {
-          "educationSpecificationType": {
-            "const": "privateProgram"
-          }
-        }
-      },
-      "EducationSpecificationRioConsumer": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Consumer"
-          },
-          {
-            "properties": {
-              "consumerKey": {
-                "const": "rio"
-              },
-              "educationSpecificationSubType": {
-                "type": "string",
-                "enum": [
-                  "variant",
-                  "cluster"
-                ]
-              },
-              "category": {
-                "type": "array",
-                "description": "A classification for programs in non-formal education. Used when describing EducationSpecification's that will map to a `articuliereOpleiding in RIO\n",
-                "minItems": 0,
-                "maxItems": 3,
-                "items": {
-                  "type": "string",
-                  "enum": [
-                    "business_and_project_support",
-                    "economy",
-                    "behavior_and_society",
-                    "healthcare_and_sport",
-                    "hobby_and_leisure_time",
-                    "agriculture_food_and_natural_environment",
-                    "management_and_project_management",
-                    "nature",
-                    "education",
-                    "law",
-                    "cross_sectoral",
-                    "language_and_culture",
-                    "technology_and_ict",
-                    "tourism_hospitality_and_recreation",
-                    "transport_and_logistics",
-                    "security_and_defense"
-                  ]
-                }
-              }
-            }
-          }
-        ]
-      },
       "EducationSpecificationExpanded": {
         "allOf": [
           {
@@ -3102,28 +3123,7 @@
               }
             }
           }
-        ],
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/HoOpleidingProperties"
-          },
-          {
-            "$ref": "#/components/schemas/HOECProperties"
-          },
-          {
-            "$ref": "#/components/schemas/HoOnderwijsEenheidProperties"
-          },
-          {
-            "$ref": "#/components/schemas/HoParticuliereOpleidingProperties"
-          }
-        ],
-        "properties": {
-          "consumers": {
-            "contains": {
-              "$ref": "#/components/schemas/EducationSpecificationRioConsumer"
-            }
-          }
-        }
+        ]
       }
     },
     "responses": {
@@ -3442,7 +3442,7 @@
                         "items": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/ProgramExpanded"
+                            "$ref": "#/components/schemas/Program"
                           }
                         },
                         "ext": {
@@ -3801,7 +3801,7 @@
                         "items": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/CourseExpanded"
+                            "$ref": "#/components/schemas/Course"
                           }
                         },
                         "ext": {
@@ -4157,7 +4157,7 @@
                         "items": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/EducationSpecificationExpanded"
+                            "$ref": "#/components/schemas/EducationSpecification"
                           }
                         },
                         "ext": {
